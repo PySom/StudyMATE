@@ -1,0 +1,28 @@
+﻿@model StudyMate.Models.Course
+
+
+@{
+    ViewData["Title"] = "Quiz";
+}
+
+<h2>Quiz</h2>
+
+<form asp-action="QuizResult" asp-controller="Courses">
+	<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+	@foreach (var item in Model.QandAs)
+	{
+		<h1>@item.Question</h1>
+		<input type='radio' name='answer' value='@item.OptionA' />
+		<Label for='answer'>@item.OptionA</Label><br />
+		<input type='radio' name='answer' value='@item.OptionB' />
+		<Label for='answer'>@item.OptionB</Label><br />
+		<input type='radio' name='answer' value='@item.OptionC' />
+		<Label for='answer'>@item.OptionC</Label><br />
+		<input type='radio' name='answer' value="@item.OptionD" />
+		<Label for="answer">@item.OptionD</Label><br />
+		<input type="button" class="btn btn-primary" onclick="answer(@item.QandAID)" value="Submit"/>
+
+		
+	}
+
+</form>

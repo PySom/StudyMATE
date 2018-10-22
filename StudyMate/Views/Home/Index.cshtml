@@ -1,0 +1,10 @@
+﻿@model IEnumerable<StudyMate.Models.Course>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h2>Click on the course to study</h2>
+@foreach (var item in Model)
+{
+	<p>@Html.ActionLink(item.CourseName, "Quiz", "Courses", new { id = item.CourseID } )</p>
+}

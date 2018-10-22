@@ -1,0 +1,72 @@
+﻿@model StudyMate.Models.QandA
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>QandA</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Question)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Question)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionA)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OptionA)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionB)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OptionB)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionC)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OptionC)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionD)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OptionD)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ImageUrl)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CorrectAnswer)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CorrectAnswer)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.VoiceOver)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.VoiceOver)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Courses)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Courses.CourseID)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.QandAID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

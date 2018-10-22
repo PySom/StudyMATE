@@ -1,0 +1,88 @@
+﻿@model IEnumerable<StudyMate.Models.QandA>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="CreateAsSingle">Create singlely</a>
+</p>
+<p>
+    <a asp-action="CreateAsGroup">Create in bulk</a>
+</p>
+<table class="table">
+    <thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Question)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.OptionA)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.OptionB)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.OptionC)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.OptionD)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.ImageUrl)
+			</th>
+			
+			<th>
+				@Html.DisplayNameFor(model => model.CorrectAnswer)
+			</th>
+			
+			<th>
+				@Html.DisplayNameFor(model => model.VoiceOver)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Courses)
+			</th>
+			
+		</tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.Question)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.OptionA)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.OptionB)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.OptionC)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.OptionD)
+			</td>
+			<td>
+				@Html.DisplayFor(model => item.ImageUrl)
+			</td>
+			<td>
+				@Html.DisplayFor(model => item.CorrectAnswer)
+			</td>
+			<td>
+				@Html.DisplayFor(model => item.VoiceOver)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Courses.CourseID)
+			</td>
+			<td>
+				<a asp-action="Edit" asp-route-id="@item.QandAID">Edit</a> |
+				<a asp-action="Details" asp-route-id="@item.QandAID">Details</a> |
+				<a asp-action="Delete" asp-route-id="@item.QandAID">Delete</a>
+			</td>
+		</tr>
+}
+    </tbody>
+</table>

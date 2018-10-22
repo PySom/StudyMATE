@@ -1,0 +1,12 @@
+C:\Users\nwisu\source\repos\StudyMate\StudyMate\bin\Debug\netcoreapp2.0\StudyMate.deps.json
+C:\Users\nwisu\source\repos\StudyMate\StudyMate\bin\Debug\netcoreapp2.0\StudyMate.runtimeconfig.json
+C:\Users\nwisu\source\repos\StudyMate\StudyMate\bin\Debug\netcoreapp2.0\StudyMate.runtimeconfig.dev.json
+C:\Users\nwisu\source\repos\StudyMate\StudyMate\bin\Debug\netcoreapp2.0\StudyMate.dll
+C:\Users\nwisu\source\repos\StudyMate\StudyMate\bin\Debug\netcoreapp2.0\StudyMate.pdb
+C:\Users\nwisu\source\repos\StudyMate\StudyMate\obj\Debug\netcoreapp2.0\StudyMate.csprojAssemblyReference.cache
+C:\Users\nwisu\source\repos\StudyMate\StudyMate\obj\Debug\netcoreapp2.0\StudyMate.csproj.CoreCompileInputs.cache
+C:\Users\nwisu\source\repos\StudyMate\StudyMate\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+C:\Users\nwisu\source\repos\StudyMate\StudyMate\obj\Debug\netcoreapp2.0\StudyMate.AssemblyInfoInputs.cache
+C:\Users\nwisu\source\repos\StudyMate\StudyMate\obj\Debug\netcoreapp2.0\StudyMate.AssemblyInfo.cs
+C:\Users\nwisu\source\repos\StudyMate\StudyMate\obj\Debug\netcoreapp2.0\StudyMate.dll
+C:\Users\nwisu\source\repos\StudyMate\StudyMate\obj\Debug\netcoreapp2.0\StudyMate.pdb
