@@ -1,0 +1,634 @@
+﻿@model List<StudyMate.Models.QandA>
+@{
+    ViewData["Title"] = "Quiz";
+}
+
+<div class="container no-padding margin-top-20">
+	<div class="row landingContainer">
+
+	</div>
+	<div class="row __mainList">
+		<div id="__spinner" class="col-md-12 no-padding spinner center-block">
+			<i class="fa fa-spinner fa-spin font-size-24"></i>
+		</div>
+		<div class="col-md-12 no-padding" id="__mainElement">
+			<form>
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+				<div class="col-md-12 landing-page-class" id="__landingPage">
+					<h4>Please select your mode of studying</h4>
+					<div class="col-md-4 no-padding">
+						<div class="form-group">
+							<label onclick="learnMode()"><input type="radio" name="mode" /> Learn Mode</label>
+						</div>
+						<div class="form-group">
+							<label  onclick="timeMode()"><input type="radio" name="mode"/> Time Mode</label>
+						</div>
+						<div class="form-group">
+							<label onclick="freeFormMode()"><input type="radio" name="mode" /> Free form Mode</label>
+						</div>
+					</div>
+					<div class="col-md-8">
+						<div id="__modeContent">
+
+						</div>
+						<div class="col-md-12 error">Please correct the time</div>
+					</div>
+				</div>
+				<div id="_sideChick" class="col-md-2 fixed-height">
+
+				</div>
+				<div id="_modelContent" class="col-md-10">
+					
+				</div>
+			</form>
+		</div>
+		<div class="col-md-12" id="_finishedQuiz">
+
+		</div>
+	</div>
+</div>
+
+<script>
+	let xhttp = new XMLHttpRequest();
+	 xhttp.onreadystatechange = function() {
+		 if (this.readyState == 4 && this.status == 200) {
+			 deserialize = JSON.parse(this.responseText);
+			 if (deserialize.qandAs.length === 0) {
+				 document.getElementById('__spinner').style.display = "none";
+				 document.getElementById('__mainElement').innerHTML = "No quizzes found";
+			 }
+			 else {
+				 document.getElementById('__spinner').style.display = "none";
+				 document.getElementsByClassName('landing-page-class')[0].style.display = "block";
+			 }
+		}
+	};
+	const id = parseInt(@ViewData["ID"].ToString());
+	 xhttp.open("GET", "https://localhost:44358/Quiz/ReturnQuizJson/"+id, true);
+	 xhttp.send();
+
+
+	function learnMode() {
+		let learn = document.getElementById('__modeContent');
+		learn.innerHTML = "<p>This part simulates the learn mode</p><input type='button' value='Start' onclick='isLearnMode()'/>"
+	}
+
+	function timeMode() {
+		let time = document.getElementById('__modeContent');
+		time.innerHTML = "<p>This part simulates the timed mode<input min='0' id='hour' type='number' placeholder='hour' value='0'/><input value='1' min='1' id='minute' type='number' placeholder='minute'/></p><input type='button' value='Start' onclick='notLearnMode(1)'/>"
+	}
+
+	function freeFormMode() {
+		let freeForm = document.getElementById('__modeContent');
+		freeForm.innerHTML = "<p>This part simulates the free form mode</p><input type='button' value='Start' onclick='notLearnMode(0)'/>"
+	}
+
+	function notLearnMode(option) {
+		if (option) {
+			let h = document.getElementById('hour');
+			let m = document.getElementById('minute');
+			if (h.value != null || h.value != "" || m.value != null || m.value != "") {
+				console.log(h.value);
+				console.log(m.value);
+				Timer(h.value, m.value);
+				document.getElementById('__landingPage').style.display = "none";
+				let model = window.deserialize;
+				document.getElementById('__spinner').style.display = "none";
+				let sideChick = document.getElementById('_sideChick');
+				sideChick.style.display = "block";
+				let mainElement = document.getElementById('_modelContent');
+				let imageUrl = "";
+				for (let i = 0; i < model.qandAs.length; i++) {
+					if (i === 0) {
+						sideChick.innerHTML += `<div class='inner-side-chick current-question'><a href='#' onclick='next(${i})'>Question ${i + 1}</a></div>`;
+					}
+					else {
+						sideChick.innerHTML += `<div class='inner-side-chick'><a href='#' onclick='next(${i})'>Question ${i + 1}</a></div>`;
+					}
+					imageUrl = (model.qandAs[i].imageUrl === null) ? "" : `<img src='../../${model.qandAs[i].imageUrl}' class='img-responsive' />`;
+					mainElement.innerHTML += `<div class="form-group form-height col-md-12 forms${i}"><div class='col-md-8'><span class='quiz${i} '>${model.qandAs[i].question}</span><br/><Label class='lquiz${i}'><input class='quiz${i} ' type='radio' name='answer${i}' value='${model.qandAs[i].optionA}' /> ${model.qandAs[i].optionA}</Label><br /><Label class='lquiz${i}'><input class='quiz${i}' type='radio' name='answer${i}' value='${model.qandAs[i].optionB}' /> ${model.qandAs[i].optionB}</Label><br /><Label class='lquiz${i}'><input class='quiz${i}' type='radio' name='answer${i}' value='${model.qandAs[i].optionC}' /> ${model.qandAs[i].optionC}</Label><br /><Label class='lquiz${i}'><input class='quiz${i}' type='radio' name='answer${i}' value="${model.qandAs[i].optionD}" /> ${model.qandAs[i].optionD}</Label><br /><input class='quiz${i}' type="button" class="btn btn-primary" onclick="previous(${i - 1})" value="Previous" /><input class='quiz${i}' type="button" class="btn btn-primary" onclick="next(${i + 1})" value="Next" /><input class='quiz${i}' type="button" class="btn btn-primary" onclick="finish()" value="Submit" /><br /></div><div class='col-md-4'>${imageUrl}</div><div class='on-voice-show'></div><div class='on-explanation-show'></div><div class='timer-show'></div></div>`
+
+				}
+
+				for (let j = 0; j < model.qandAs.length; j++) {
+					if (j != 0) {
+						var classHolder = document.getElementsByClassName(`forms${j}`);
+						for (let k = 0; k < classHolder.length; k++) {
+							classHolder[k].style.display = "none";
+
+						}
+					}
+					else {
+						var classHolder = document.getElementsByClassName(`quiz${j}`);
+						for (let l = 0; l < classHolder.length; l++) {
+							if (classHolder[l].value === 'Previous') {
+								classHolder[l].style.display = "none";
+							}
+							else if (classHolder[l].value === 'Submit') {
+								classHolder[l].style.display = "none";
+							}
+						}
+					}
+				}
+			}
+			else {
+				let e = document.getElementsByClassName('error');
+				e.style.display = "block";
+			}
+		}
+		else {
+			document.getElementById('__landingPage').style.display = "none";
+			let model = window.deserialize;
+			document.getElementById('__spinner').style.display = "none";
+			let sideChick = document.getElementById('_sideChick');
+			sideChick.style.display = "block";
+			let mainElement = document.getElementById('_modelContent');
+			let imageUrl = "";
+			for (let i = 0; i < model.qandAs.length; i++) {
+				if (i === 0) {
+					sideChick.innerHTML += `<div class='inner-side-chick current-question'><a href='#' onclick='next(${i})'>Question ${i + 1}</a></div>`;
+				}
+				else {
+					sideChick.innerHTML += `<div class='inner-side-chick'><a href='#' onclick='next(${i})'>Question ${i + 1}</a></div>`;
+				}
+				imageUrl = (model.qandAs[i].imageUrl === null) ? "" : `<img src='../../${model.qandAs[i].imageUrl}' class='img-responsive' />`;
+				mainElement.innerHTML += `<div class="form-group form-height col-md-12 forms${i}"><div class='col-md-8'><span class='quiz${i} '>${model.qandAs[i].question}</span><br/><Label class='lquiz${i}'><input class='quiz${i} ' type='radio' name='answer${i}' value='${model.qandAs[i].optionA}' /> ${model.qandAs[i].optionA}</Label><br /><Label class='lquiz${i}'><input class='quiz${i}' type='radio' name='answer${i}' value='${model.qandAs[i].optionB}' /> ${model.qandAs[i].optionB}</Label><br /><Label class='lquiz${i}'><input class='quiz${i}' type='radio' name='answer${i}' value='${model.qandAs[i].optionC}' /> ${model.qandAs[i].optionC}</Label><br /><Label class='lquiz${i}'><input class='quiz${i}' type='radio' name='answer${i}' value="${model.qandAs[i].optionD}" /> ${model.qandAs[i].optionD}</Label><br /><input class='quiz${i}' type="button" class="btn btn-primary" onclick="previous(${i - 1})" value="Previous" /><input class='quiz${i}' type="button" class="btn btn-primary" onclick="next(${i + 1})" value="Next" /><input class='quiz${i}' type="button" class="btn btn-primary" onclick="finish()" value="Submit" /><br /></div><div class='col-md-4'>${imageUrl}</div><div class='on-voice-show'></div><div class='on-explanation-show'></div></div>`
+
+			}
+
+			for (let j = 0; j < model.qandAs.length; j++) {
+				if (j != 0) {
+					var classHolder = document.getElementsByClassName(`forms${j}`);
+					for (let k = 0; k < classHolder.length; k++) {
+						classHolder[k].style.display = "none";
+
+					}
+				}
+				else {
+					var classHolder = document.getElementsByClassName(`quiz${j}`);
+					for (let l = 0; l < classHolder.length; l++) {
+						if (classHolder[l].value === 'Previous') {
+							classHolder[l].style.display = "none";
+						}
+						else if (classHolder[l].value === 'Submit') {
+							classHolder[l].style.display = "none";
+						}
+					}
+				}
+			}
+		}
+		
+	}
+
+	function isLearnMode() {
+		document.getElementById('__landingPage').style.display = "none";
+		let model = window.deserialize;
+		let sideChick = document.getElementById('_sideChick');
+		sideChick.style.display = "block";
+		document.getElementById('__spinner').style.display = "none";
+		let mainElement = document.getElementById('_modelContent');
+		let imageUrl = "";
+		for (let i = 0; i < model.qandAs.length; i++) {
+			if (i === 0) {
+				sideChick.innerHTML += `<div class='inner-side-chick current-question'><a href='#' onclick='onNext(${i})'>Question ${i + 1}</a></div>`;
+			}
+			else {
+				sideChick.innerHTML += `<div class='inner-side-chick'><a href='#' onclick='onNext(${i})'>Question ${i + 1}</a></div>`;
+			}
+			imageUrl = (model.qandAs[i].imageUrl === null) ? "" : `<img src='../../${model.qandAs[i].imageUrl}' class='img-responsive' />`;
+			mainElement.innerHTML += `<div class="form-group col-md-12 form-height forms${i}"><div class='col-md-8'><span class='quiz${i} '>${model.qandAs[i].question}</span><br/><Label class='lquiz${i}'><input class='quiz${i} ' type='radio' name='answer${i}' value='${model.qandAs[i].optionA}' /> ${model.qandAs[i].optionA}</Label><br /><Label class='lquiz${i}' ><input class='quiz${i}' type='radio' name='answer${i}' value='${model.qandAs[i].optionB}' /> ${model.qandAs[i].optionB}</Label><br /><Label class='lquiz${i}'><input class='quiz${i}' type='radio' name='answer${i}' value='${model.qandAs[i].optionC}' /> ${model.qandAs[i].optionC}</Label><br /><Label class='lquiz${i}'><input class='quiz${i}' type='radio' name='answer${i}' value="${model.qandAs[i].optionD}" /> ${model.qandAs[i].optionD}</Label><br /><input class='quiz${i}' type="button" class="btn btn-primary" onclick="checkResult(${i})" value="Submit" /><br /></div><div class='col-md-4'>${imageUrl}</div><div class='on-explanation-show'></div><div class='on-voice-show'></div><div class='on-submit-show'></div>`
+
+		}
+
+		for (let j = 0; j < model.qandAs.length; j++) {
+			if (j != 0) {
+				var classHolder = document.getElementsByClassName(`forms${j}`);
+				for (let k = 0; k < classHolder.length; k++) {
+					classHolder[k].style.display = "none";
+
+				}
+			}
+			else {
+				var classHolder = document.getElementsByClassName(`forms${j}`);
+				classHolder[j].style.display = "block";
+			}
+		}
+	}
+	tryAgain = 0;
+
+	function checkResult(id) {
+		//let answerPortion = document.getElementById('__answerPortion');
+		let answerArray = document.getElementsByName(`answer${id}`);
+		let portion = document.getElementsByClassName('on-submit-show');
+		console.log(id);
+		let answer = null;
+		for (let j = 0; j < answerArray.length; j++) {
+			console.log(answerArray[j])
+			if (answerArray[j].checked) {
+				answer = answerArray[j].value;
+				console.log(answer);
+			}
+		}
+		if (answer != null) {
+			let realAnswer = window.deserialize.qandAs[id];
+			console.log(realAnswer);
+			if (answer === realAnswer.correctAnswer) {
+				portion[id].innerHTML = `<table border=1><tr><td>Correct</td><tr><tr><td><input class="stateLessButton" type="button" onclick="onViewExplanation(${id})" value="View explanation"/></td><tr><tr><td><input class="stateLessButton" type="button" onclick="onNext(${id + 1})" value="Next question"/></td><tr></table>`;
+				for (let k = 0; k < portion.length; k++) {
+					console.log(k);
+					console.log(id);
+					if (k != id) {
+						portion[k].style.display = "none";
+					}
+					else {
+						portion[k].style.display = "block";
+					}
+				}
+				for (let k = 0; k < answerArray.length; k++) {
+					answerArray[k].disabled = 'true';
+				}
+			
+			}
+			else {
+				if (window.tryAgain != 0) {
+					portion[id].innerHTML = `<table border=1><tr><td>Incorrect</td><tr><tr><td><input class="stateLessButton" type="button" onclick="onViewExplanation(${id})" value="View explanation"/></td><tr><tr><td><input class="stateLessButton" type="button" onclick="onNext(${id + 1})" value="Next question"/></td><tr></table>`;
+					for (let k = 0; k < answerArray.length; k++) {
+						answerArray[k].disabled = 'true';
+
+					}
+					
+				}
+				else {
+					window.tryAgain += 1;
+					portion[id].innerHTML = `<table border=1><tr><td>Incorrect</td><tr><tr><td><input class="stateLessButton" type="button" onclick="onTryAgain()" value="Try again"/></td><tr><tr><td><input class="stateLessButton" type="button" onclick="onNext(${id + 1})" value="Next question"/></td><tr></table>`
+				}
+				for (let k = 0; k < portion.length; k++) {
+					if (k != id) {
+						portion[k].style.display = "none";
+					}
+					else {
+						console.log(k);
+						console.log(portion[k]);
+						portion[k].style.display = "block";
+					}
+				}
+			}
+		}
+
+	}
+
+	function onNext(id) {
+		window.tryAgain = 0;
+		console.log(window.tryAgain);
+		let model = window.deserialize;
+		let v = document.getElementsByTagName('audio')[id - 1];
+		if (v != null) {
+			v.pause();
+		}
+		
+		console.log(model);
+		let nextId = id;
+		let innerSideChick = document.getElementsByClassName('inner-side-chick');
+		for (let sc = 0; sc < innerSideChick.length; sc++) {
+			if (id === sc) {
+				innerSideChick[sc].classList.add('current-question');
+			}
+			else {
+				if (innerSideChick[sc].classList.contains('current-question')) {
+					innerSideChick[sc].classList.remove('current-question')
+				}
+			}
+		}
+		if (nextId === window.deserialize.qandAs.length) {
+			console.log(nextId);
+			let mainElement = document.getElementById('__mainElement');
+			mainElement.innerHTML = "<p>Thank you for your time. Trust you learnt a whole lot?</p>"
+		}
+		else {
+			for (let j = 0; j < model.qandAs.length; j++) {
+				if (nextId != j) {
+					var classHolder = document.getElementsByClassName(`forms${j}`);
+					for (let k = 0; k < classHolder.length; k++) {
+						classHolder[k].style.display = "none";
+					}
+				}
+				else {
+					var classHolder = document.getElementsByClassName(`forms${j}`)[0];
+					console.log(classHolder);
+					classHolder.style.display = 'block';
+				}
+			}
+		}
+		
+			
+	}
+
+	function onTryAgain() {
+		let portion = document.getElementsByClassName('on-submit-show');
+		for (let k = 0; k < portion.length; k++) {
+			portion[k].style.display = "none";
+		}
+		
+	}
+
+	function onViewExplanation(id) {
+		let explanation = document.getElementsByClassName('on-explanation-show');
+		let voiceOver = document.getElementsByClassName('on-voice-show');
+		for (let j = 0; j < explanation.length; j++) {
+			if (j === id) {
+				explanation[j].innerHTML = window.deserialize.qandAs[j].explanation;
+				explanation[j].style.display = "block";
+				let voiceControl = (window.deserialize.qandAs[j].voiceOver == null)? "" : `<audio autoplay controls><source src="../../${window.deserialize.qandAs[j].voiceOver}" type="audio/mp3"></audio>`;
+				voiceOver[j].innerHTML = voiceControl;
+				voiceOver[j].style.display = "block";
+
+				
+			}
+			
+		}
+	}
+
+	function next(id) {
+		let model = window.deserialize;
+		let nextId = id;
+		let voiceOver = document.getElementsByTagName('audio');
+		if (voiceOver != null || voiceOver.length > 0) {
+			for (let a = 0; a < voiceOver.length; a++) {
+				if (a === id) {
+					console.log("here");
+					voiceOver[a].play();
+				}
+				else {
+					voiceOver[a].pause();
+				}
+			}
+		}
+		
+		let innerSideChick = document.getElementsByClassName('inner-side-chick');
+		for (let sc = 0; sc < innerSideChick.length; sc++) {
+			if (id === sc) {
+				innerSideChick[sc].classList.add('current-question');
+			}
+			else {
+				if (innerSideChick[sc].classList.contains('current-question')) {
+					innerSideChick[sc].classList.remove('current-question')
+				}
+			}
+		}
+		for (let j = 0; j < model.qandAs.length; j++) {
+			if (nextId != j) {
+				var classHolder = document.getElementsByClassName(`forms${j}`);
+				for (let k = 0; k < classHolder.length; k++) {
+					classHolder[k].style.display = "none";
+				}
+			}
+			else if (nextId === model.qandAs.length - 1) {
+				var submitHolder = document.getElementsByClassName(`quiz${j}`)
+				var classHolder = document.getElementsByClassName(`forms${j}`);
+				for (let l = 0; l < classHolder.length; l++) {
+					classHolder[l].style.display = "block";
+					for (let m = 0; m < submitHolder.length; m++) {
+						if (submitHolder[m].value === 'Next') {
+							submitHolder[m].style.display = "none";
+						}
+						if (submitHolder[m].value === 'Submit') {
+							submitHolder[m].style.display = "inline";
+						}
+					}
+				}
+			}
+			else {
+				var submitHolder = document.getElementsByClassName(`quiz${j}`);
+				var classHolder = document.getElementsByClassName(`forms${j}`);
+				for (let l = 0; l < classHolder.length; l++) {
+					classHolder[l].style.display = "inline-block";
+
+					for (let m = 0; m < submitHolder.length; m++) {
+						if (submitHolder[m].value === 'Submit') {
+							submitHolder[m].style.display = "none";
+						}
+					}
+				}
+			}
+		}
+		
+		
+	}
+
+	function previous(id) {
+		let model = window.deserialize;
+		let nextId = id;
+		if (nextId < 0) {
+			nextId = 0;
+		}
+		let voiceOver = document.getElementsByTagName('audio');
+		if (voiceOver != null || voiceOver.length > 0) {
+			for (let a = 0; a < voiceOver.length; a++) {
+				if (a === id) {
+					console.log("here");
+					voiceOver[a].play();
+				}
+				else {
+					voiceOver[a].pause();
+				}
+			}
+		}
+		let innerSideChick = document.getElementsByClassName('inner-side-chick');
+		for (let sc = 0; sc < innerSideChick.length; sc++) {
+			if (id === sc) {
+				innerSideChick[sc].classList.add('current-question');
+			}
+			else {
+				if (innerSideChick[sc].classList.contains('current-question')) {
+					innerSideChick[sc].classList.remove('current-question')
+				}
+			}
+		}
+		for (let j = 0; j < model.qandAs.length; j++) {
+			if (nextId != j) {
+				var classHolder = document.getElementsByClassName(`forms${j}`);
+				for (let k = 0; k < classHolder.length; k++) {
+					classHolder[k].style.display = "none";
+				}
+			}
+			else if (nextId === model.qandAs.length - 1) {
+				var submitHolder = document.getElementsByClassName(`quiz${j}`)
+				var classHolder = document.getElementsByClassName(`forms${j}`);
+				for (let l = 0; l < classHolder.length; l++) {
+					classHolder[l].style.display = "block";
+					for (let m = 0; m < submitHolder.length; m++) {
+						if (submitHolder[m].value === 'Next') {
+							submitHolder[m].style.display = "none";
+						}
+						if (submitHolder[m].value === 'Submit') {
+							submitHolder[m].style.display = "inline";
+						}
+					}
+				}
+			}
+			else {
+				var submitHolder = document.getElementsByClassName(`quiz${j}`);
+				var classHolder = document.getElementsByClassName(`forms${j}`);
+				for (let l = 0; l < classHolder.length; l++) {
+					classHolder[l].style.display = "inline-block";
+
+					for (let m = 0; m < submitHolder.length; m++) {
+						if (submitHolder[m].value === 'Submit') {
+							submitHolder[m].style.display = "none";
+						}
+					}
+				}
+			}
+		}
+	}
+
+	function finish() {
+		let sum = 0;
+		let answer = "";
+		for (let i = 0; i < window.deserialize.qandAs.length; i++) {
+			var answerHolders = document.getElementsByName(`answer${i}`);
+			for (let j = 0; j < answerHolders.length; j++) {
+				if (answerHolders[j].checked) {
+					answer = answerHolders[j].value;
+					
+				}
+			}
+			if (answer === window.deserialize.qandAs[i].correctAnswer) {
+				sum += 5;
+			}
+		}
+		timePortion = document.getElementsByClassName("timer-show");
+		for (let k = 0; k < timePortion.length; k++) {
+			timePortion[k].style.display = "none";
+		}
+		let percentageScore = sum / (5 * window.deserialize.qandAs.length) * 100;
+		let mainElement = document.getElementById('__mainElement');
+		let finishedQuiz = document.getElementById('_finishedQuiz');
+		mainElement.style.display = "none";
+		finishedQuiz.style.display = "block";
+		finishedQuiz.innerHTML = `<p>Total sum: ${sum}</p>`;
+		finishedQuiz.innerHTML += `<p>Percentage: ${percentageScore}%</p>`;
+		finishedQuiz.innerHTML += `<p><button class='btn btn-primary' onclick='Review()'>Review</button><a href='/Quiz/QuizCourseByID/${id}' class='btn btn-primary'>Retake </a></p>`;
+
+		
+		//alert("Thank you");
+	}
+	added = false;
+	function Review() {
+		let mainElement = document.getElementById('__mainElement');
+		let finishedQuiz = document.getElementById('_finishedQuiz');
+		let voiceOver = document.getElementsByClassName('on-voice-show');
+		finishedQuiz.style.display = "none";
+		mainElement.style.display = "block";
+		let totalLength = window.deserialize.qandAs.length;
+		console.log(totalLength);
+		for (let i = 0; i < totalLength; i++) {
+			let answerArray = document.getElementsByName(`answer${i}`);
+			let voice = window.deserialize.qandAs[i].voiceOver;
+			let voicePlacement = (voice == null) ? "" : `<audio controls><source src="../../${window.deserialize.qandAs[i].voiceOver}" type="audio/mp3"></audio>`;
+			voiceOver[i].innerHTML = voicePlacement;
+			voiceOver[i].style.display = "block";
+			for (let a = 0; a < answerArray.length; a++) {
+				answerArray[a].disabled = "true";
+
+			}
+			//let quiz = document.getElementsByClassName(`quiz${i}`);
+			let classHolder = document.getElementsByClassName(`forms${i}`);
+			console.log(classHolder);
+			console.log(classHolder[i]);
+			if (i === 0) {
+				classHolder[0].style.display = "block";
+			}
+			else {
+				classHolder[0].style.display = "none";
+			}
+
+		}
+		let explanation = document.getElementsByClassName('on-explanation-show');
+		for (let j = 0; j < explanation.length; j++) {
+			explanation[j].innerHTML = window.deserialize.qandAs[j].explanation;
+			explanation[j].style.display = "block";
+		}
+
+		let currentQuestion = document.getElementsByClassName('inner-side-chick');
+		console.log(currentQuestion);
+		for (let sc = 0; sc < currentQuestion.length; sc++) {
+			console.log(currentQuestion[sc]);
+			if (sc === 0) {
+				
+				currentQuestion[sc].classList.add('current-question');
+			}
+			else {
+				if (currentQuestion[sc].classList.contains('current-question')) {
+					currentQuestion[sc].classList.remove('current-question')
+				}
+			}
+		}
+		let voicePlay = document.getElementsByTagName('audio');
+		if (voicePlay != null || voicePlay.length > 0) {
+			for (let a = 0; a < voicePlay.length; a++) {
+				if (a === 0) {
+					console.log("here");
+					voicePlay[a].play();
+				}
+				else {
+					voicePlay[a].pause();
+				}
+			}
+		}
+
+		for (let i = 0; i < window.deserialize.qandAs.length; i++) {
+			var answerHolders = document.getElementsByName(`answer${i}`);
+			var labelQuery = document.getElementsByClassName(`lquiz${i}`);
+
+			for (let j = 0; j < answerHolders.length; j++) {
+				if (answerHolders[j].checked) {
+					answer = answerHolders[j];
+					lab = labelQuery[j];
+					//labelQuery = answerHolders[j].parentElement;
+				}
+				if (answerHolders[j].value === window.deserialize.qandAs[i].correctAnswer) {
+					labAnswer = labelQuery[j];
+				}
+				
+			}
+			if (answer.value === window.deserialize.qandAs[i].correctAnswer) {
+				console.log(lab);
+				if (added) { }
+				else {
+					let newContent = document.createElement('i');
+					newContent.classList.add('glyphicon');
+					newContent.classList.add('glyphicon-ok');
+					newContent.classList.add('correct');
+					lab.appendChild(newContent);
+
+				}
+
+				//lab += " <i class='glyphicon glyphicon-ok'></i>";
+				//console.log(answer);
+				//answer.checked = 'checked'
+
+
+			}
+			else {
+				if (added) { }
+				else {
+					let newContent = document.createElement('i');
+					newContent.classList.add('glyphicon');
+					newContent.classList.add('glyphicon-remove');
+					newContent.classList.add('wrong');
+					lab.appendChild(newContent);
+
+					let correct = document.createElement('i');
+					correct.classList.add('glyphicon');
+					correct.classList.add('glyphicon-ok');
+					correct.classList.add('correct');
+					labAnswer.appendChild(correct);
+
+				}
+			}
+		}
+		added = true;
+
+	}
+</script>

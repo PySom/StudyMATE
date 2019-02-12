@@ -12,15 +12,15 @@
     <div class="col-md-4">
         <form asp-action="CreateAsGroup" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-			<div class="form-group">
-				<label asp-for="UploadedFile" class="control-label"></label>
-				<input type="file" asp-for="UploadedFile" class="form-control" />
-			</div>
             <div class="form-group">
-                <label asp-for="CoursesID" class="control-label"></label>
-                <select asp-for="CoursesID" class ="form-control" asp-items="ViewBag.CoursesID"></select>
+                <label asp-for="UploadedFile" class="control-label"></label>
+                <input asp-for="UploadedFile" class="form-control" />
+                <span asp-validation-for="UploadedFile" class="text-danger"></span>
             </div>
-
+            <div class="form-group">
+                <label asp-for="CourseID" class="control-label"></label>
+                <select asp-for="CourseID" class ="form-control" asp-items="ViewBag.CourseID"></select>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>

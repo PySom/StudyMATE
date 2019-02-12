@@ -26,5 +26,9 @@ namespace StudyMate.Data
 		public DbSet<StudyMate.Models.QandA> QandA { get; set; }
 
 		public DbSet<StudyMate.Models.Course> Course { get; set; }
+
+		public DbSet<StudyMate.Models.CourseTaken> CourseTaken { get; set; }
+
+
 	}
 }

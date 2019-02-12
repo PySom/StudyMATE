@@ -19,13 +19,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Views\QandAs\CreateAsGroup.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
+    <Folder Include="Data\Migrations\" />
+    <Folder Include="wwwroot\VoiceOver\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\VoiceOver\" />
+    <Content Update="Views\QandAs\CreateAsSingle.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
   </ItemGroup>
 
 </Project>

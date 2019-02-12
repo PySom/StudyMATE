@@ -10,62 +10,74 @@
 <div>
     <h4>QandA</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Question)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Question)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.OptionA)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.OptionA)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.OptionB)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.OptionB)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.OptionC)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.OptionC)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.OptionD)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.OptionD)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ImageUrl)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ImageUrl)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CorrectAnswer)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CorrectAnswer)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.VoiceOver)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.VoiceOver)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Courses)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Courses.CourseID)
-        </dd>
-    </dl>
+	<dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.Question)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Question)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.OptionA)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.OptionA)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.OptionB)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.OptionB)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.OptionC)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.OptionC)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.OptionD)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.OptionD)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ImageUrl)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ImageUrl)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.CorrectAnswer)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.CorrectAnswer)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Explanation)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Explanation)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.TopicTitle)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.TopicTitle)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.VoiceOver)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.VoiceOver)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Course)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Course.CourseID)
+		</dd>
+	</dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="QandAID" />

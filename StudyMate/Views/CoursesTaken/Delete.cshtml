@@ -1,0 +1,45 @@
+﻿@model StudyMate.Models.CourseTaken
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>CourseTaken</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Score)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Score)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateSubmitted)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateSubmitted)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationUserID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUserID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CoursesID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CoursesID)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="CourseTakenID" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

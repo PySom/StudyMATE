@@ -1,0 +1,42 @@
+﻿@model StudyMate.Models.CourseTaken
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CourseTaken</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Score)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Score)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateSubmitted)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateSubmitted)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationUserID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUserID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CoursesID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CoursesID)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.CourseTakenID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

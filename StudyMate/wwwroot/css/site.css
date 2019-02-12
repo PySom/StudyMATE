@@ -15,21 +15,142 @@
     font-size: 20px;
     line-height: 1.4;
 }
-
+/*Make spinner bigger*/
+.font-size-24 {
+	font-size: 24px !important;
+}
+/*Add a margin top of 20px*/
+.margin-top-20 {
+	margin-top: 20px;
+}
 /* Make .svg files in the carousel display properly in older browsers */
 .carousel-inner .item img[src$=".svg"] {
-    width: 100%;
+	width: 100%;
 }
-
+/*Landing page for StudyMATE*/
+.landing-page-class {
+	display: none;
+}
+/*Show this page on finish quiz*/
+#_finishedQuiz {
+	display: none;
+}
+/*Input radio button*/
+input[type="radio"] {
+	-ms-transform: scale(1.5);
+	-webkit-transform: scale(1.5);
+	transform: scale(1.5);
+}
+/*Color for current question*/
+.current-question a {
+	color: rgba(127,127,127,0.5) !important;
+}
+/*Label full width*/
+label {
+	width: 100%;
+}
+	label:hover {
+		background-color: rgba(121,121,122,0.3);
+	}
+.on-submit-show {
+	position: absolute;
+	right: 0;
+	bottom: 20px;
+	display: none;
+}
+/*Button with nothing*/
+.stateLessButton {
+	background-color: rgba(0,0,0,0);
+	border: 0 solid #fff;
+	color: black;
+}
+/*Timer position*/
+.timer-show {
+	position: absolute;
+	bottom: 0;
+	margin: 0 auto;
+	display: none;
+}
+/*Bottom postion for voice over*/
+.on-voice-show {
+	position: absolute;
+	bottom: 0;
+	margin: 0 auto;
+	display: none;
+}
+/*Explanation show*/
+.on-explanation-show {
+	position: absolute;
+	right: 0;
+	top: 5px;
+	display: none;
+}
+/*Give form group a fixed height*/
+.form-height {
+	height: 250px;
+}
+/*Correct option*/
+.correct {
+	color: green;
+}
+/*Wrong option*/
+.wrong {
+	color: red;
+}
+/*Error handling*/
+.error {
+	display: none;
+	color: red;
+}
+/*Disable padding*/
+.no-padding {
+	padding: 0;
+}
 /* QR code generator */
 #qrCode {
-    margin: 15px;
+	margin: 15px;
 }
-
+/*Hide bar initially*/
+#_sideChick {
+	display: none;
+}
+/*Fixed height*/
+.fixed-height {
+	height: 250px;
+	overflow-y: scroll;
+}
+.glyphicon.normal-right-spinner {
+	-webkit-animation: glyphicon-spin-r 2s infinite linear;
+	animation: glyphicon-spin-r 2s infinite linear;
+}
+/*Remove top margin*/
+.no-margin-top {
+	margin-top: 0;
+}
+/*Hide quiz part on resume*/
+.hide-on-show {
+	display: none;
+}
+/*Allow questions to load before showing side nav bar*/
+.side-chick {
+	display: none;
+}
+/*Description for each quiz should be hidden*/
+.hide-description-onresume {
+	display: none;
+}
+/*Home button should not be seen*/
+.home-button {
+	display: none;
+}
+/*Active tab*/
+.active-tab {
+	color: yellow;
+}
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
+	/* Hide captions */
+	.carousel-caption {
         display: none;
     }
 }

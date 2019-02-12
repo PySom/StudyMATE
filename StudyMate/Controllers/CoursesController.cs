@@ -145,27 +145,9 @@ namespace StudyMate.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-		public IActionResult Quiz(int? id)
-		{
-			if (id == null)
-			{
-				return NotFound();
-			}
-			var context = _context.Course.Where(q => q.CourseID == id).Include(q => q.QandAs).FirstOrDefault();
-			if (context == null)
-			{
-				return NotFound();
-			}
-			
-			return View("Quiz", context);
-		}
-
-		
         private bool CourseExists(int id)
         {
             return _context.Course.Any(e => e.CourseID == id);
         }
-
-
     }
 }

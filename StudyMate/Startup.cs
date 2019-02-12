@@ -35,6 +35,8 @@ namespace StudyMate
 
 			// Add application services.
 			services.AddTransient<IEmailSender, EmailSender>();
+			services.AddTransient<IImageService, ImageService>();
+			services.AddTransient<IFileWriter, FileWriter>();
 
 			services.AddMvc();
 		}

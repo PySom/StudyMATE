@@ -1,10 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace StudyMate.Models
+﻿namespace StudyMate.Models
 {
 	public class QandA
 	{
@@ -16,10 +10,11 @@ namespace StudyMate.Models
 		public string OptionD { get; set; }
 		public string ImageUrl { get; set; }
 		public string CorrectAnswer { get; set; }
-
+		public string TopicTitle { get; set; }
 		public string VoiceOver { get; set; }
+		public string Explanation { get; set; }
 
-		public Course Courses { get; set; }
-		public int CoursesID { get; set; }
+		public Course Course { get; set; }
+		public int CourseID { get; set; }
 	}
 }

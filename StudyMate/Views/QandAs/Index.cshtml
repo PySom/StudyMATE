@@ -7,10 +7,8 @@
 <h2>Index</h2>
 
 <p>
-    <a asp-action="CreateAsSingle">Create singlely</a>
-</p>
-<p>
-    <a asp-action="CreateAsGroup">Create in bulk</a>
+    <a asp-action="CreateAsSingle">Create Singly</a>
+    <a asp-action="CreateAsGroup">Create in Group</a>
 </p>
 <table class="table">
     <thead>
@@ -33,18 +31,22 @@
 			<th>
 				@Html.DisplayNameFor(model => model.ImageUrl)
 			</th>
-			
 			<th>
 				@Html.DisplayNameFor(model => model.CorrectAnswer)
 			</th>
-			
+			<th>
+				@Html.DisplayNameFor(model => model.Explanation)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.TopicTitle)
+			</th>
 			<th>
 				@Html.DisplayNameFor(model => model.VoiceOver)
 			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.Courses)
+				@Html.DisplayNameFor(model => model.Course)
 			</th>
-			
+			<th></th>
 		</tr>
     </thead>
     <tbody>
@@ -66,16 +68,22 @@
 				@Html.DisplayFor(modelItem => item.OptionD)
 			</td>
 			<td>
-				@Html.DisplayFor(model => item.ImageUrl)
+				@Html.DisplayFor(modelItem => item.ImageUrl)
 			</td>
 			<td>
-				@Html.DisplayFor(model => item.CorrectAnswer)
+				@Html.DisplayFor(modelItem => item.CorrectAnswer)
 			</td>
 			<td>
-				@Html.DisplayFor(model => item.VoiceOver)
+				@Html.DisplayFor(modelItem => item.Explanation)
 			</td>
 			<td>
-				@Html.DisplayFor(modelItem => item.Courses.CourseID)
+				@Html.DisplayFor(modelItem => item.TopicTitle)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.VoiceOver)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Course.CourseID)
 			</td>
 			<td>
 				<a asp-action="Edit" asp-route-id="@item.QandAID">Edit</a> |
