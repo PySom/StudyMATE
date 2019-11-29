@@ -1,0 +1,88 @@
+.accordion{
+    padding: 0px!important;
+}
+
+.card-header {
+   padding: 0px !important;
+   background-color: white !important;
+}
+
+.card-header button{
+    width: 100% !important;
+    padding: .75rem 1.25rem;
+    text-align: left !important;
+    outline: none;
+    
+    /* padding: .375rem .75rem; */
+
+}
+
+.card-header > button:hover{
+   background-color: dodgerblue !important;
+   color: white;
+
+}
+
+.card-header > button:active{
+    outline: none;
+ 
+ }
+.search-results{
+    max-height: 250px;
+    overflow-y: auto;
+    position: absolute;
+    z-index: 9999;
+    background-color: white;
+    max-width: 90%;
+    border-radius: 0 0 3px 3px;
+    border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    visibility: visible;
+    box-shadow: 0 2px 4px #00000061;
+}
+
+.dropdown{
+    max-width: 213px;
+}
+
+.dropdown > .dropdown-toggle {
+    text-align: left !important;
+    white-space: inherit !important;
+}
+
+.search-results li{
+    padding: 0.5em 1em;
+    
+    
+}
+.search-results li:hover{
+    background-color: dodgerblue;
+    cursor: pointer;
+}
+
+.search-results li span{
+    cursor: pointer;
+}
+.search-results li span:hover{
+    color: white;
+}
+
+.search-results::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+}
+
+.search-results::-webkit-scrollbar
+{
+    width: 5px;
+    background-color: #F5F5F5;
+}
+
+.search-results::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #ccc;
+}
